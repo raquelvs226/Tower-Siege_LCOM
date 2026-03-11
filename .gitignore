@@ -1,1 +1,6 @@
 .minix-src/
+
+*.o
+*.txt
+.gdbinit
+lab2/lab2
