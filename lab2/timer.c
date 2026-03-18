@@ -6,10 +6,34 @@
 #include "i8254.h"
 
 int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
-  /* To be implemented by the students */
-  printf("%s is not yet implemented!\n", __func__);
+  // Validate timer (0-2) and frequency
+  if (timer > 2 || freq > TIMER_FREQ) return 1;
 
-  return 1;
+  // Read current timer configuration (Status Byte)
+  uint8_t st;
+  if (timer_get_conf(timer, &st) != 0) return 1;
+
+  // Prepare control word 
+  uint8_t control_word = (st & 0x0F); // Preserve lower 4 bits
+  control_word |= (timer << 6);      // Set timer
+  control_word |= TIMER_LSB_MSB;     // LSB/MSB mode
+  
+  // Write control word to control register
+  if (sys_outb(TIMER_CTRL, control_word) != 0) return 1;
+
+  // Compute divisor 
+  uint16_t div = (uint16_t) (TIMER_FREQ / freq);
+
+  // Get LSB e MSB
+  uint8_t lsb, msb;
+  util_get_LSB(div, &lsb);
+  util_get_MSB(div, &msb);
+
+  // Write divisor to timer port
+  if (sys_outb(TIMER_0 + timer, lsb) != 0) return 1;
+  if (sys_outb(TIMER_0 + timer, msb) != 0) return 1;
+
+  return 0;
 }
 
 int (timer_subscribe_int)(uint8_t *bit_no) {
