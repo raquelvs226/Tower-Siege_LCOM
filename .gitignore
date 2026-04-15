@@ -1,6 +1,7 @@
 .minix-src/
 
 *.o
+*.a 
 *.txt
 .gdbinit
 lab2/lab2
