@@ -1,81 +1,104 @@
-# Template
+# Tower Siege
 
+## Overview
 
+**Tower Siege** is a tower defense game developed in C for the MINIX environment as the final project of the Computer Laboratory (LCOM) course at the Faculty of Engineering of the University of Porto (FEUP).
 
-## Getting started
+The game challenges players to defend their territory against successive waves of enemies by strategically placing towers and directly controlling a hero. Players must manage their resources, defeat enemies, and survive all ten waves to achieve victory.
 
-Welcome to your LCOM code repository. This is where your team should deliver all the required artifacts, including code.
-Please take your time to get acquainted with GitLab and its functionalities. The way your team uses Git and GitLab to collaborate will be evaluated. 
+The project integrates five hardware devices — Timer, Keyboard, Mouse, Video Card, and RTC — through the device drivers developed throughout the semester.
 
-## Boilerplate
+## Features
 
-In this repository, you will find some pre-loaded files and an initial setup of your team's project board. 
-Along the semester, you will be adding files and folders to this repository.
-Make sure you expand on the issues and milestones for your project, helping your team to coordinate and meet all the deadlines. Major deadlines are already setup but you should add your own sub-issues, additional issues, and deadlines. 
+- **Three difficulty levels:** Easy, Medium, and Hard, each featuring a different enemy path and gameplay settings.
+- **Wave-based gameplay:** Ten successive waves with increasing numbers of enemies and shorter spawn intervals.
+- **Tower defense system:** Two tower types, Archer and Mage, with different costs, damage values, and attack ranges.
+- **Tower management:** Place, upgrade, and sell towers to adapt your strategy throughout the game.
+- **Hero control:** Move the hero freely around the map and attack enemies directly.
+- **Enemy system:** Different enemy types, including Goblins and Orcs, with distinct characteristics.
+- **Resource management:** Earn gold by defeating enemies and use it to build and upgrade towers.
+- **Lives and respawning:** Protect your lives while managing the hero's health and respawn time.
+- **Scoring system:** Earn points by defeating enemies and receive bonus points for unspent gold at the end of the game.
+- **High-score leaderboard:** Save the top ten scores under a chosen username, together with the date and time of the game.
+- **Game interface:** Main menu, difficulty selection, instructions, pause menu, and game-over screens.
 
-## GitLab Setup 
+## Controls
 
-### Add your files
+### Hero
 
-* [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+| Key | Action |
+|---|---|
+| W | Move up |
+| A | Move left |
+| S | Move down |
+| D | Move right |
+| Space | Attack enemies |
 
+### Mouse
+
+| Action | Function |
+|---|---|
+| Move mouse | Move the in-game cursor |
+| Left click | Select a tower spot or interact with tower management options |
+
+### Menus
+
+| Key | Action |
+|---|---|
+| Up / W | Navigate up |
+| Down / S | Navigate down |
+| Enter | Confirm selection |
+| ESC | Pause the game or return to the previous menu |
+
+## Technologies and Hardware
+
+The project was developed in **C**, targeting the MINIX environment, and integrates the following hardware devices:
+
+| Device | Function |
+|---|---|
+| Timer (i8254) | Controls the game loop, frame rate, animations, and gameplay timing. |
+| Keyboard (i8042) | Handles player movement, attacks, and menu navigation. |
+| Mouse (PS/2) | Controls the in-game cursor and tower interactions. |
+| Video Card (VBE) | Renders the game in graphics mode using XPM sprites and double buffering. |
+| RTC | Retrieves real-world date and time information for match timestamps and high scores. |
+
+The application is built using the static libraries developed throughout the LCOM laboratory assignments:
+
+- `librtc.a`
+- `libtimer.a`
+- `libutils.a`
+- `libkbd.a`
+- `libmouse.a`
+- `libvideo.a`
+
+## Project Structure
+
+```text
+.
+├── lab1/                  # RTC driver and library
+├── lab2/                  # Timer and utility libraries
+├── lab3/                  # Keyboard driver and library
+├── lab4/                  # Mouse driver and library
+├── lab5/                  # Video graphics library
+│
+├── proj/
+│   ├── src/
+│   │   ├── assets/        # Game sprites and graphical assets
+│   │   ├── enemy/         # Enemy entities and wave management
+│   │   ├── font/          # Font rendering and name entry
+│   │   ├── game/          # Main gameplay logic
+│   │   ├── hero/          # Hero movement and attack system
+│   │   ├── hud/           # In-game heads-up display
+│   │   ├── map/           # Game map and path management
+│   │   ├── menu/          # Menus, difficulty, pause and high scores
+│   │   ├── player/        # Player resources, lives and score
+│   │   ├── sprite/        # Sprite rendering and animations
+│   │   ├── tower/         # Tower and projectile systems
+│   │   ├── main.c         # Application entry point and main loop
+│   │   └── Makefile       # Build configuration
+│   │
+│   ├── docs/              # Generated Doxygen documentation
+│   └── highscores.bin     # High-score data
+│
+└── README.md
 ```
-cd existing_repo
-git remote add origin https://gitlab.up.pt/lcom-26/template.git
-git branch -M main
-git push -uf origin main
-```
-
-### Integrate with your tools
-
-* [Set up project integrations](https://gitlab.up.pt/lcom-26/template/-/settings/integrations)
-
-### Collaborate with your team
-
-* [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
-
-### Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-## License
-For open source projects, say how it is licensed.
-
-## Declaration of Responsible AI Use
-
-We declare that:
-
-1. We are responsible for all code and documentation in this repository, and we understand that we must be able to explain and justify any part of it on request.  
-2. We have used AI-based tools (e.g., code assistants, chatbots, or generators) only to support my learning, not to bypass the intended learning outcomes or any assessment rules.  
-3. Wherever AI tools contributed to this work, we have:  
-   - Used them within the limits set by the course policies and institutional regulations.  
-   - Reviewed, tested, and, where necessary, edited the outputs, taking full responsibility for their correctness, originality, and legality.  
-   - Ensured that no confidential, personal, or sensitive data were shared with AI tools.  
-4. We have not used AI tools to generate complete solutions that we present as entirely our own unaided work, and we have avoided plagiarism, whether from AI outputs or other sources.  
-5. If asked, we will provide details of which tools we used, for which files or parts of the project, and how we verified and adapted their outputs.
-
-Signed: `Nuno Gonçalves`, `Raquel Silva`, `Tiago Meireles`, `Maria Ferreira`  
-Date: `04/03/2026`
-
-## Authors and acknowledgment
-
-LCOM Project for group GRUPO_2LEIC16_2.
-Group members:
-
-Nuno Gonçalves(up202403355@up.pt)
-Raquel Silva (up202404971@up.pt)
-Tiago Meireles (up202403644@up.pt)
-Maria Ferreira (up202406040@up.pt)
